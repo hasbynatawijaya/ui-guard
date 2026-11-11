@@ -1,0 +1,11 @@
+.checkout {
+  padding: var(--space-6);
+}
+
+.pay:focus {
+  outline: none;
+}
+
+.row {
+  border-bottom: 1px solid #e5e7eb;
+}
