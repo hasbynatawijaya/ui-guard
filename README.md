@@ -16,7 +16,7 @@ Both layers only report problems on **changed lines**, so an old codebase doesn'
 It ships three ways:
 
 - **CLI:** `npx ui-guard --base origin/main`
-- **GitHub Action:** one PR comment, updated in place on each push (see `examples/ui-guard.yml`)
+- **GitHub Action:** one PR comment, updated in place on each push (see `examples/ui-guard.yml`, and [pull request #1](../../pull/1) for a live run on a component with seeded defects)
 - **Claude Code skill:** `skill/ui-guard/SKILL.md`, so an assistant reviews its own UI changes with the same rubric before you see them. A test keeps the skill's rubric identical to the one the CLI sends.
 
 ## AI use
@@ -28,7 +28,7 @@ This repository was built with Claude Code, and the review layer calls the Claud
 | Part | State |
 |---|---|
 | Rule checks, CLI, report, config | Done, tested |
-| GitHub Action | Written; not yet run on a real pull request |
+| GitHub Action | Verified on a real pull request ([#1](../../pull/1)): posts one comment, updates it in place on the next push, fails the check on errors |
 | Claude review layer | Written against the SDK, tested with a fake client; **not yet run against the live API** |
 | Eval of the rule layer | Done (below) |
 | Eval of the Claude layer | Not run yet (needs an API key) |
