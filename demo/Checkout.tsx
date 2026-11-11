@@ -10,9 +10,9 @@ export function Checkout({ items, onRemove, onPay }: { items: Item[]; onRemove: 
       <ul>
         {items.map((item, index) => (
           <li key={index} className="row">
-            <img src={item.image} />
+            <img src={item.image} alt="" width={48} height={48} />
             <span>{item.name} × {item.qty}</span>
-            <button onClick={() => onRemove(item.id)}>
+            <button onClick={() => onRemove(item.id)} aria-label={`Remove ${item.name}`}>
               <TrashIcon />
             </button>
           </li>
