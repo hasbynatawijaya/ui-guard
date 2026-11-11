@@ -1,0 +1,72 @@
+name: UI Guard
+description: Review UI changes in a pull request for accessibility, design-token and performance problems.
+branding:
+  icon: eye
+  color: gray-dark
+
+inputs:
+  base:
+    description: Git ref to compare against. Defaults to the pull request's base branch.
+    required: false
+    default: ""
+  anthropic-api-key:
+    description: Optional. When set, Claude reviews the changed lines as well as the rule checks.
+    required: false
+    default: ""
+  github-token:
+    description: Token used to post the PR comment.
+    required: false
+    default: ${{ github.token }}
+
+outputs:
+  findings:
+    description: Number of findings on changed lines.
+    value: ${{ steps.review.outputs.findings }}
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 24
+
+    - name: Build UI Guard
+      shell: bash
+      run: |
+        npm ci --prefix "$GITHUB_ACTION_PATH" --no-audit --no-fund
+        npm run build --prefix "$GITHUB_ACTION_PATH"
+
+    - name: Review changed lines
+      id: review
+      shell: bash
+      env:
+        ANTHROPIC_API_KEY: ${{ inputs.anthropic-api-key }}
+        BASE: ${{ inputs.base || format('origin/{0}', github.base_ref) }}
+      run: |
+        set +e
+        node "$GITHUB_ACTION_PATH/dist/cli.js" --base "$BASE" \
+          --markdown "$RUNNER_TEMP/ui-guard.md" --json "$RUNNER_TEMP/ui-guard.json"
+        code=$?
+        set -e
+        echo "exit-code=$code" >> "$GITHUB_OUTPUT"
+        if [ -f "$RUNNER_TEMP/ui-guard.json" ]; then
+          echo "findings=$(node -e 'console.log(require(process.argv[1]).findings.length)' "$RUNNER_TEMP/ui-guard.json")" >> "$GITHUB_OUTPUT"
+        fi
+        # 2 means UI Guard itself failed (for example, a missing base ref).
+        if [ "$code" = "2" ]; then exit 2; fi
+
+    - name: Post or update the PR comment
+      if: github.event_name == 'pull_request'
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}
+        REPO: ${{ github.repository }}
+      run: bash "$GITHUB_ACTION_PATH/scripts/post-comment.sh" "$RUNNER_TEMP/ui-guard.md"
+
+    - name: Fail on findings
+      if: steps.review.outputs.exit-code == '1'
+      shell: bash
+      run: |
+        echo "UI Guard found problems at or above the failOn level. See the PR comment."
+        exit 1

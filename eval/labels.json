@@ -1,0 +1,33 @@
+{
+  "note": "Synthetic components with seeded defects. Each label finds its line by a unique snippet. One label per file, line and category.",
+  "labels": [
+    { "file": "ProductCard.tsx", "snippet": "import _ from \"lodash\"", "category": "perf", "defect": "whole lodash imported for one function" },
+    { "file": "ProductCard.tsx", "snippet": "<div className=\"card\" onClick", "category": "a11y", "defect": "clickable card not reachable by keyboard" },
+    { "file": "ProductCard.tsx", "snippet": "<img src={product.image} />", "category": "a11y", "defect": "product image has no alt" },
+    { "file": "ProductCard.tsx", "snippet": "<img src={product.image} />", "category": "perf", "defect": "image without dimensions causes layout shift" },
+    { "file": "ProductCard.tsx", "snippet": "style={{ color: \"#1a1a1a\"", "category": "tokens", "defect": "hard-coded colour and font size" },
+    { "file": "ProductCard.tsx", "snippet": "\"price price-red\"", "category": "a11y", "defect": "sale shown only by colour" },
+    { "file": "ProductCard.tsx", "snippet": "text-[#e11d48]", "category": "tokens", "defect": "arbitrary Tailwind colour" },
+    { "file": "ProductCard.tsx", "snippet": "<button onClick={() => onAdd(product.id)}>", "category": "a11y", "defect": "icon-only button with no name" },
+    { "file": "SearchForm.tsx", "snippet": "useEffect(() => {", "category": "perf", "defect": "effect without dependency array fetches on every render" },
+    { "file": "SearchForm.tsx", "snippet": "<input placeholder=\"Search products\"", "category": "a11y", "defect": "input labelled only by placeholder, plus autoFocus" },
+    { "file": "SearchForm.tsx", "snippet": "<p>{results.length} results</p>", "category": "a11y", "defect": "result count change is not announced (no live region)" },
+    { "file": "SearchForm.tsx", "snippet": "<li key={i}>", "category": "perf", "defect": "array index as key" },
+    { "file": "Modal.tsx", "snippet": "<div className=\"backdrop\" onClick", "category": "a11y", "defect": "modal closes only by mouse, no Escape" },
+    { "file": "Modal.tsx", "snippet": "<div className=\"modal\"", "category": "a11y", "defect": "no role=dialog, aria-modal or focus management" },
+    { "file": "Modal.tsx", "snippet": "<div className=\"modal\"", "category": "tokens", "defect": "named colour and magic radius/padding values" },
+    { "file": "Modal.tsx", "snippet": "<div className=\"modal-title\">", "category": "a11y", "defect": "title is not a heading and not linked to the dialog" },
+    { "file": "Modal.tsx", "snippet": "<span className=\"close\" onClick", "category": "a11y", "defect": "close control is a span with no keyboard support or name" },
+    { "file": "Nav.tsx", "snippet": "text-[#2563eb] font-bold", "category": "tokens", "defect": "arbitrary Tailwind colour" },
+    { "file": "Nav.tsx", "snippet": "text-[#2563eb] font-bold", "category": "a11y", "defect": "active link shown only visually, no aria-current" },
+    { "file": "Nav.tsx", "snippet": "<a onClick={() => window.history.back()}>", "category": "a11y", "defect": "anchor without href used as a button" },
+    { "file": "Nav.tsx", "snippet": "<span tabIndex={2}>", "category": "a11y", "defect": "positive tabIndex on a non-control" },
+    { "file": "Comment.tsx", "snippet": "import moment from \"moment\"", "category": "perf", "defect": "moment imported for relative time" },
+    { "file": "Comment.tsx", "snippet": "<img src={avatarUrl}", "category": "perf", "defect": "avatar without dimensions" },
+    { "file": "styles.css", "snippet": "background: #ffffff;", "category": "tokens", "defect": "hard-coded background colour" },
+    { "file": "styles.css", "snippet": "outline: none;", "category": "a11y", "defect": "focus outline removed with no replacement" },
+    { "file": "styles.css", "snippet": "font-size: 14px;", "category": "tokens", "defect": "font size off the type scale" },
+    { "file": "styles.css", "snippet": "color: #e11d48;", "category": "tokens", "defect": "hard-coded colour" },
+    { "file": "styles.css", "snippet": "margin-top: 13px;", "category": "tokens", "defect": "spacing value off the scale" }
+  ]
+}

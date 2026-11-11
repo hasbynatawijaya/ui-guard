@@ -1,0 +1,30 @@
+{
+  "name": "ui-guard",
+  "version": "0.1.0",
+  "description": "Reviews AI-written UI code in pull requests for accessibility, design-token and performance problems",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --import tsx --test \"src/**/*.test.ts\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "eval": "node --import tsx scripts/eval.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bin": {
+    "ui-guard": "dist/cli.js"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "1.3.0",
+    "typescript": "6.0.3",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "tsx": "4.21.0"
+  }
+}
